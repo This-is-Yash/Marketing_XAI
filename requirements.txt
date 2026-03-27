@@ -1,0 +1,24 @@
+# Core App Framework
+streamlit
+
+# Data Manipulation
+pandas
+numpy
+
+# Machine Learning
+scikit-learn
+joblib
+
+# Explainable AI (XAI)
+shap
+lime
+
+# Visualization
+plotly
+matplotlib
+
+# Forecasting
+statsmodels
+
+# Excel Support (if using xlsx files)
+openpyxl
