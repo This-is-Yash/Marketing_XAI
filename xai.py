@@ -14,17 +14,10 @@ from sklearn.ensemble import RandomForestClassifier
 
 import warnings
 warnings.filterwarnings("ignore")
-
-# ============================================
-# CONFIG
-# ============================================
 st.set_page_config(layout="wide", page_title="XAI Marketing Dashboard")
 
-st.title("🧠 Intelligent Explainable AI Marketing Dashboard")
+st.title("Explainable AI Marketing Dashboard")
 
-# ============================================
-# LOAD DATA (CACHED)
-# ============================================
 @st.cache_data
 def load_data(file):
     if file:
@@ -36,9 +29,6 @@ df = load_data(uploaded_file)
 
 df["Revenue"] = df["Revenue"].astype(int)
 
-# ============================================
-# FILTERS
-# ============================================
 st.sidebar.header("🎛 Filters")
 
 bounce_filter = st.sidebar.slider("Max Bounce Rate", 0.0, 1.0, 1.0)
@@ -47,17 +37,11 @@ exit_filter = st.sidebar.slider("Max Exit Rate", 0.0, 1.0, 1.0)
 df = df[(df["BounceRates"] <= bounce_filter) &
         (df["ExitRates"] <= exit_filter)]
 
-# ============================================
-# PREPROCESS
-# ============================================
 df_encoded = pd.get_dummies(df, drop_first=True)
 
 X = df_encoded.drop("Revenue", axis=1)
 y = df_encoded["Revenue"]
 
-# ============================================
-# MODEL (CACHED + SAFE LOAD)
-# ============================================
 @st.cache_resource
 def load_model(X, y):
     if os.path.exists("model.pkl"):
@@ -68,14 +52,11 @@ def load_model(X, y):
 
 model = load_model(X, y)
 
-if st.sidebar.button("🔄 Retrain Model"):
+if st.sidebar.button("Retrain Model"):
     model.fit(X, y)
     joblib.dump(model, "model.pkl")
     st.sidebar.success("Model retrained!")
 
-# ============================================
-# SAFE SHAP FUNCTION
-# ============================================
 @st.cache_resource
 def get_shap_values(_model, X):
     explainer = shap.TreeExplainer(_model)
@@ -95,9 +76,6 @@ def get_shap_values(_model, X):
 
 explainer, sample_X, shap_values = get_shap_values(model, X)
 
-# ============================================
-# LIME
-# ============================================
 lime_explainer = LimeTabularExplainer(
     training_data=X.values,
     feature_names=X.columns.tolist(),
@@ -105,20 +83,14 @@ lime_explainer = LimeTabularExplainer(
     mode="classification"
 )
 
-# ============================================
-# TABS
-# ============================================
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📊 Overview",
-    "📈 Analytics",
-    "🧠 Explainability",
-    "🎯 Marketing AI",
-    "📊 KPI Dashboard"
+    "Overview",
+    "Analytics",
+    "Explainability",
+    "Marketing AI",
+    "KPI Dashboard"
 ])
 
-# ============================================
-# OVERVIEW
-# ============================================
 with tab1:
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Users", len(df))
@@ -129,9 +101,6 @@ with tab1:
     fig = px.pie(df, names="Revenue", title="Conversion Split")
     st.plotly_chart(fig, use_container_width=True)
 
-# ============================================
-# ANALYTICS
-# ============================================
 with tab2:
     fig = px.scatter(df, x="PageValues", y="ProductRelated_Duration", color="Revenue")
     st.plotly_chart(fig, use_container_width=True)
@@ -151,18 +120,15 @@ with tab2:
     fig.add_scatter(x=list(range(len(ts), len(ts)+10)), y=forecast)
     st.plotly_chart(fig, use_container_width=True)
 
-# ============================================
-# EXPLAINABILITY
-# ============================================
 with tab3:
-    st.subheader("📊 SHAP Feature Importance")
+    st.subheader("SHAP Feature Importance")
 
     fig, ax = plt.subplots()
     shap.summary_plot(shap_values, sample_X, plot_type="bar", show=False)
     st.pyplot(fig)
 
-    # SAFE IMPORTANCE
-    st.subheader("🔝 Top Features")
+
+    st.subheader("Top Features")
 
     importance = pd.Series(
         np.abs(shap_values).mean(axis=0),
@@ -172,7 +138,7 @@ with tab3:
     st.bar_chart(importance)
 
     # LIME
-    st.subheader("🧪 LIME Explanation")
+    st.subheader("LIME Explanation")
 
     exp = lime_explainer.explain_instance(
         sample_X.iloc[0].values,
@@ -183,9 +149,6 @@ with tab3:
     for f, w in exp.as_list():
         st.write(f"{f} → {w:.3f}")
 
-# ============================================
-# MARKETING AI
-# ============================================
 with tab4:
     pv = st.slider("Intent Score", 0.0, 300.0, 20.0)
     br = st.slider("Bounce Rate", 0.0, 1.0, 0.2)
@@ -208,9 +171,6 @@ with tab4:
     st.progress(int(prob * 100))
     st.write(f"Purchase Probability: {prob:.2f}")
 
-# ============================================
-# KPI
-# ============================================
 with tab5:
     revenue = df["Revenue"].sum()
     customers = len(df)
