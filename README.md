@@ -60,16 +60,16 @@ An **Explainable AI-powered Marketing Dashboard** that helps businesses make **d
 ## 🖼️ Screenshots
 
 ### 📊 Dashboard Overview
-![Overview](figrues/Figure_1.png)
+![Overview](Figure_1.png)
 
 ### 📈 Analytics View
-![Analytics](figrues/Figure_3.png)
+![Analytics](Figure_3.png)
 
 ### 🧠 SHAP Explainability
-![SHAP](figrues/Sheap_value.png)
+![SHAP](Sheap_value.png)
 
 ### 📊 KPI Dashboard
-![KPI](figrues/Figure_4.png)
+![KPI](Figure_4.png)
 
 ---
 
