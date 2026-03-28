@@ -4,7 +4,6 @@
 ![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-red)
 ![Kaggle Dataset](https://img.shields.io/badge/Dataset-Kaggle-blue)
-![Hugging Face](https://img.shields.io/badge/Deployed%20on-HuggingFace-yellow)
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
@@ -12,10 +11,7 @@
 
 ## 🚀 Live Demo
 
-👉 Hugging Face Space:  
-https://huggingface.co/spaces/your-username/xai-marketing-dashboard
-
-👉 Streamlit Cloud:  [
+Streamlit Cloud:  [
 https://marketingxai.streamlit.app](https://marketingxai-xq8utybfup9f7ruuerjwxv.streamlit.app/)
 
 ---
