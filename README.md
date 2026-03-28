@@ -15,8 +15,8 @@
 👉 Hugging Face Space:  
 https://huggingface.co/spaces/your-username/xai-marketing-dashboard
 
-👉 (Optional) Streamlit Cloud:  
-https://your-app.streamlit.app
+👉 Streamlit Cloud:  [
+https://marketingxai.streamlit.app](https://marketingxai-xq8utybfup9f7ruuerjwxv.streamlit.app/)
 
 ---
 
