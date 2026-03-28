@@ -618,8 +618,8 @@ if st.sidebar.button("🔄 Retrain Model"):
 # SAFE SHAP FUNCTION
 # ============================================
 @st.cache_resource
-def get_shap_values(model, X):
-    explainer = shap.TreeExplainer(model)
+def get_shap_values(_model, X):
+    explainer = shap.TreeExplainer(_model)
     sample_X = X.sample(min(200, len(X)))
 
     shap_vals = explainer.shap_values(sample_X)
